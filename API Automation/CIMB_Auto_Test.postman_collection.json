@@ -1,0 +1,337 @@
+{
+	"info": {
+		"_postman_id": "e8cfd4f0-d93c-4003-b0d8-b3e7bb1257f9",
+		"name": "CIMB_Auto_Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6130857"
+	},
+	"item": [
+		{
+			"name": "Get_User_Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var resp_json = pm.response.json();\r",
+							"pm.test(\"Succesful request\", function(){pm.response.to.have.status(200)})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ae20704f6caf4f6f30b2c562a6e1b0151f4912ea",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.todoist.com/rest/v2/projects",
+					"protocol": "https",
+					"host": [
+						"api",
+						"todoist",
+						"com"
+					],
+					"path": [
+						"rest",
+						"v2",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create_A_Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseBody = pm.response.json();\r",
+							"pm.test(\"Succesful request\", function(){pm.response.to.have.status(200)})\r",
+							"pm.test(\"Project name is : \"+responseBody.name, pm.expect(responseBody.name).to.equal(\"zuhair_testProject\"))\r",
+							"\r",
+							"\r",
+							"// Define the expected data types for specific properties\r",
+							"var expectedDataTypes = {\r",
+							"    \"id\": \"string\",\r",
+							"    \"name\": \"string\",\r",
+							"};\r",
+							"\r",
+							"// Function to check data type\r",
+							"function checkDataType(actualValue, expectedType) {\r",
+							"    if (typeof actualValue === expectedType) {\r",
+							"        return true;\r",
+							"    }\r",
+							"    return false;\r",
+							"}\r",
+							"\r",
+							"// Validate data types\r",
+							"for (var property in expectedDataTypes) {\r",
+							"    if (responseBody.hasOwnProperty(property)) {\r",
+							"        var expectedType = expectedDataTypes[property];\r",
+							"        var actualValue = responseBody[property];\r",
+							"\r",
+							"        if (!checkDataType(actualValue, expectedType)) {\r",
+							"            tests[property + \" has incorrect data type\"] = false;\r",
+							"        }\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"// Check if all tests passed\r",
+							"var allTestsPassed = Object.values(tests).every(Boolean);\r",
+							"tests[\"All data type tests passed\"] = allTestsPassed;\r",
+							"\r",
+							"// Log test results\r",
+							"console.log(tests);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ae20704f6caf4f6f30b2c562a6e1b0151f4912ea",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"12333\",\r\n    \"name\":\"zuhair_testProject\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.todoist.com/rest/v2/projects",
+					"protocol": "https",
+					"host": [
+						"api",
+						"todoist",
+						"com"
+					],
+					"path": [
+						"rest",
+						"v2",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create_A_Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseBody = pm.response.json();\r",
+							"pm.environment.set(\"task_id\", responseBody.id)\r",
+							"pm.test(\"Succesful request\", function(){pm.response.to.have.status(200)})\r",
+							"pm.test(\"content name is : \"+responseBody.content, pm.expect(responseBody.content).to.equal(\"Buy Milk\"))\r",
+							"\r",
+							"\r",
+							"// Define the expected data types for specific properties\r",
+							"var expectedDataTypes = {\r",
+							"    \"id\": \"string\",\r",
+							"    \"project_id\": \"string\",\r",
+							"    \"content\": \"string\",\r",
+							"};\r",
+							"\r",
+							"// Function to check data type\r",
+							"function checkDataType(actualValue, expectedType) {\r",
+							"    if (typeof actualValue === expectedType) {\r",
+							"        return true;\r",
+							"    }\r",
+							"    return false;\r",
+							"}\r",
+							"\r",
+							"// Validate data types\r",
+							"for (var property in expectedDataTypes) {\r",
+							"    if (responseBody.hasOwnProperty(property)) {\r",
+							"        var expectedType = expectedDataTypes[property];\r",
+							"        var actualValue = responseBody[property];\r",
+							"\r",
+							"        if (!checkDataType(actualValue, expectedType)) {\r",
+							"            tests[property + \" has incorrect data type\"] = false;\r",
+							"        }\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"// Check if all tests passed\r",
+							"var allTestsPassed = Object.values(tests).every(Boolean);\r",
+							"tests[\"All data type tests passed\"] = allTestsPassed;\r",
+							"\r",
+							"// Log test results\r",
+							"console.log(tests);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ae20704f6caf4f6f30b2c562a6e1b0151f4912ea",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"123\",\r\n    \"content\":\"Buy Milk\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.todoist.com/rest/v2/tasks",
+					"protocol": "https",
+					"host": [
+						"api",
+						"todoist",
+						"com"
+					],
+					"path": [
+						"rest",
+						"v2",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update_A_Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseBody = pm.response.json();\r",
+							"pm.environment.set(\"task_id\", responseBody.id)\r",
+							"pm.test(\"Succesful request\", function(){pm.response.to.have.status(200)})\r",
+							"pm.test(\"content name is : \"+responseBody.content, pm.expect(responseBody.content).to.equal(\"Buy Milk\"))\r",
+							"pm.test(\"due string is : \"+responseBody.due.string, pm.expect(responseBody.due.string).to.equal(\"tomorrow\"))\r",
+							"\r",
+							"\r",
+							"// Define the expected data types for specific properties\r",
+							"var expectedDataTypes = {\r",
+							"    \"id\": \"string\",\r",
+							"    \"project_id\": \"string\",\r",
+							"};\r",
+							"\r",
+							"// Function to check data type\r",
+							"function checkDataType(actualValue, expectedType) {\r",
+							"    if (typeof actualValue === expectedType) {\r",
+							"        return true;\r",
+							"    }\r",
+							"    return false;\r",
+							"}\r",
+							"\r",
+							"// Validate data types\r",
+							"for (var property in expectedDataTypes) {\r",
+							"    if (responseBody.hasOwnProperty(property)) {\r",
+							"        var expectedType = expectedDataTypes[property];\r",
+							"        var actualValue = responseBody[property];\r",
+							"\r",
+							"        if (!checkDataType(actualValue, expectedType)) {\r",
+							"            tests[property + \" has incorrect data type\"] = false;\r",
+							"        }\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"// Check if all tests passed\r",
+							"var allTestsPassed = Object.values(tests).every(Boolean);\r",
+							"tests[\"All data type tests passed\"] = allTestsPassed;\r",
+							"\r",
+							"// Log test results\r",
+							"console.log(tests);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ae20704f6caf4f6f30b2c562a6e1b0151f4912ea",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"due_string\":\"tomorrow\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.todoist.com/rest/v2/tasks/{{task_id}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"todoist",
+						"com"
+					],
+					"path": [
+						"rest",
+						"v2",
+						"tasks",
+						"{{task_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "accesstoken",
+			"value": "Bearer ae20704f6caf4f6f30b2c562a6e1b0151f4912ea",
+			"type": "string"
+		}
+	]
+}
